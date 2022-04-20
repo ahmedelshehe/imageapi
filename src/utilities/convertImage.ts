@@ -1,5 +1,6 @@
 import path from 'path';
 import sharp from 'sharp';
+import { mkdir as fsMkDir, existsSync as fsExistsSync } from 'fs';
 //Creating a function with 3 inputs 1 is required and two optional
 //filename(string) | required , width and height (number) | optional
 //Returns A Promise of type string
@@ -21,6 +22,15 @@ const convertImage = (
   );
   return new Promise<string>((resolve, reject) => {
     try {
+      const folderExcists = fsExistsSync(
+        path.join(__dirname, `..\\assets\\thumb`)
+      );
+      if (!folderExcists)
+        fsMkDir(path.join(__dirname, `..\\assets\\thumb`), error => {
+          if (error) {
+            reject();
+          }
+        });
       //Resize the image using sharp
       sharp(fileDir)
         .resize(width, height)

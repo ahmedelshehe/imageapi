@@ -9,19 +9,13 @@ routes.get(
   '/api/images',
   async (req: Request, res: Response): Promise<Response> => {
     if (!req.query.filename) {
-      return res.status(400).send({
-        message: 'Query String Missing Filname'
-      });
+      return res.status(400).send(`<h1>Query String Missing Filename</h1>`);
     }
     if (!req.query.width) {
-      return res.status(400).send({
-        message: 'Query String Missing Width'
-      });
+      return res.status(400).send(`<h1>Query String Missing Width</h1>`);
     }
     if (!req.query.height) {
-      return res.status(400).send({
-        message: 'Query String Missing Height'
-      });
+      return res.status(400).send(`<h1>Query String Missing Height</h1>`);
     }
     //Getting fileName from the url
     const fileName = req.query.filename;
@@ -34,14 +28,14 @@ routes.get(
       const width = Number(req.query.width);
       const height = Number(req.query.height);
       if (!Number.isInteger(width)) {
-        return res.status(400).send({
-          message: 'Invalid width, Width must be positive integer'
-        });
+        return res
+          .status(400)
+          .send(`<h1>Invalid width, Width must be positive integer</h1>`);
       }
       if (!Number.isInteger(height)) {
-        return res.status(400).send({
-          message: 'Invalid height, Height must be positive integer'
-        });
+        return res
+          .status(400)
+          .send(`<h1>Invalid height, Height must be positive integer</h1>`);
       }
       //Checking if the image thumbfile already excits
       const imageCached = await thumbExcits(fileName as string, width, height);
@@ -69,9 +63,9 @@ routes.get(
     } else {
       // Condition : The file does not exist
       // Returning Response with 400 response code and the message
-      return res.status(400).send({
-        message: 'File Does not exist'
-      });
+      return res
+        .status(400)
+        .send(`<h1>File Does not exist , or Wrong File Name</h1>`);
     }
   }
 );

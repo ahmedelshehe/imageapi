@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var path_1 = __importDefault(require("path"));
 var sharp_1 = __importDefault(require("sharp"));
+var fs_1 = require("fs");
 //Creating a function with 3 inputs 1 is required and two optional
 //filename(string) | required , width and height (number) | optional
 //Returns A Promise of type string
@@ -16,6 +17,13 @@ var convertImage = function (fileName, width, height) {
     var outDir = path_1.default.join(__dirname, "..\\assets\\thumb\\".concat(fileName, "thumb.jpg"));
     return new Promise(function (resolve, reject) {
         try {
+            var folderExcists = (0, fs_1.existsSync)(path_1.default.join(__dirname, "..\\assets\\thumb"));
+            if (!folderExcists)
+                (0, fs_1.mkdir)(path_1.default.join(__dirname, "..\\assets\\thumb"), function (error) {
+                    if (error) {
+                        reject();
+                    }
+                });
             //Resize the image using sharp
             (0, sharp_1.default)(fileDir)
                 .resize(width, height)
