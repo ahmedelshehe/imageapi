@@ -67,12 +67,17 @@ var supertest_1 = __importDefault(require("supertest"));
 var fs_1 = require("fs");
 var path = __importStar(require("path"));
 var sharp_1 = __importDefault(require("sharp"));
+var convertImage_1 = __importDefault(require("../utilities/convertImage"));
 var request = (0, supertest_1.default)(index_1.default);
 describe('Api EndPoint Testing', function () {
     it('expects to respond with 200 if provided with correct filname', function (done) { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images').query('filename=fjord').query('width=300').query('height=500')];
+                case 0: return [4 /*yield*/, request
+                        .get('/api/images')
+                        .query('filename=fjord')
+                        .query('width=300')
+                        .query('height=500')];
                 case 1:
                     _a.sent();
                     expect(200);
@@ -84,7 +89,11 @@ describe('Api EndPoint Testing', function () {
     it('expects to respond with 400 if provided with wrong filname', function (done) { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images').query('filename=fjosrd').query('width=300').query('height=500')];
+                case 0: return [4 /*yield*/, request
+                        .get('/api/images')
+                        .query('filename=fjosrd')
+                        .query('width=300')
+                        .query('height=500')];
                 case 1:
                     _a.sent();
                     expect(400);
@@ -129,22 +138,13 @@ describe('Image Processing Testing', function () {
         var image, imageMetadata;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    //Resize the image using sharp
-                    (0, sharp_1.default)(path.join(__dirname, "..\\..\\dist\\assets\\full\\santamonica.jpg"))
-                        .resize(300, 500)
-                        .toFile(path.join(__dirname, "..\\..\\dist\\assets\\thumb\\santamonicathumb.jpg"), function (err) {
-                        if (err)
-                            throw err;
-                    });
-                    setTimeout(function () { console.log("World!"); }, 2000);
-                    return [4 /*yield*/, fs_1.promises.readFile(path.join(__dirname, "..\\..\\dist\\assets\\thumb\\santamonicathumb.jpg"))];
+                case 0: return [4 /*yield*/, (0, convertImage_1.default)('santamonica', 400, 500)];
                 case 1:
                     image = _a.sent();
                     return [4 /*yield*/, (0, sharp_1.default)(image).metadata()];
                 case 2:
                     imageMetadata = _a.sent();
-                    expect(imageMetadata.width).toBe(300);
+                    expect(imageMetadata.width).toBe(400);
                     expect(imageMetadata.height).toBe(500);
                     return [2 /*return*/];
             }

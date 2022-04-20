@@ -7,8 +7,8 @@ import sharp from 'sharp';
 //and returns the directory of the converted image
 const convertImage = (
   fileName: string,
-  height?: number,
-  width?: number
+  width: number,
+  height: number
 ): Promise<string> => {
   // Setting Up the Input Directory and Output Directory
   const fileDir: string = path.join(
@@ -23,7 +23,7 @@ const convertImage = (
     try {
       //Resize the image using sharp
       sharp(fileDir)
-        .resize(height ? height : null, width ? width : null)
+        .resize(width, height)
         .toFile(outDir, err => {
           if (err) throw err;
         });

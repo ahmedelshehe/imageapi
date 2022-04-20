@@ -10,7 +10,7 @@ var sharp_1 = __importDefault(require("sharp"));
 //Returns A Promise of type string
 //The Function converts the image file to another image with the dimentions specified
 //and returns the directory of the converted image
-var convertImage = function (fileName, height, width) {
+var convertImage = function (fileName, width, height) {
     // Setting Up the Input Directory and Output Directory
     var fileDir = path_1.default.join(__dirname, "..\\assets\\full\\".concat(fileName, ".jpg"));
     var outDir = path_1.default.join(__dirname, "..\\assets\\thumb\\".concat(fileName, "thumb.jpg"));
@@ -18,7 +18,7 @@ var convertImage = function (fileName, height, width) {
         try {
             //Resize the image using sharp
             (0, sharp_1.default)(fileDir)
-                .resize(height ? height : null, width ? width : null)
+                .resize(width, height)
                 .toFile(outDir, function (err) {
                 if (err)
                     throw err;

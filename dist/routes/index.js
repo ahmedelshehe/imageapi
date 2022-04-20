@@ -112,9 +112,7 @@ routes.get('/api/images', function (req, res) { return __awaiter(void 0, void 0,
             case 2:
                 image = _a.sent();
                 // Responding with the image
-                return [2 /*return*/, res
-                        .status(200)
-                        .end(image)];
+                return [2 /*return*/, res.status(200).end(image)];
             case 3: return [4 /*yield*/, (0, convertImage_1.default)(fileName, width, height)];
             case 4:
                 thumbFile = _a.sent();
@@ -122,9 +120,7 @@ routes.get('/api/images', function (req, res) { return __awaiter(void 0, void 0,
             case 5:
                 image = _a.sent();
                 // Responding with the image
-                return [2 /*return*/, res
-                        .status(200)
-                        .end(image)];
+                return [2 /*return*/, res.status(200).end(image)];
             case 6: return [3 /*break*/, 8];
             case 7: 
             // Condition : The file does not exist
